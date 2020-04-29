@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from './color.css';
+import { colors } from './color';
 
 export const layouts = StyleSheet.create({
   container: {
@@ -8,13 +8,9 @@ export const layouts = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.primaryColor,
-    height: 56,
-    paddingTop: 10
   },
   headerText: {
-    color: colors.primaryColor,
-    fontSize: 18,
-    fontWeight: '600'
+    color: colors.lightPrimaryColor,
   },
   content: {
     backgroundColor: colors.white,
@@ -30,5 +26,5 @@ export const layouts = StyleSheet.create({
   footerText: {
     color: colors.lightPrimaryColor,
     fontSize: 16
-  }
+  },
 });

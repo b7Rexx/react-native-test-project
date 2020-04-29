@@ -5,7 +5,7 @@ import {
   Button,
   Text,
 } from 'native-base';
-import { layouts } from '../../styles/layout.css';
+import { layouts } from '../styles/layout.css';
 export default class FooterLayout extends Component {
   render() {
     return (
