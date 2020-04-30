@@ -1,5 +1,6 @@
 export const DEFAULT_APP_VIEW = 'MAIN';
 export const CHANGE_APP_VIEW = 'CHANGE_APP_VIEW';
+export const UPDATE_SEARCH_STATE = 'UPDATE_SEARCH_STATE';
 
 export const NO_IMAGE = 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-stock-vector-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
 

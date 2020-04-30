@@ -1,24 +1,29 @@
 import React from 'react';
-import { NAVIGATION } from './api/constants';
-import { colors } from './styles/color';
-import HomeScreen from './screens/homeScreen';
-import SearchScreen from './screens/searchScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { generateStackOptions, generateTabOptions } from './navigationHelper';
 
+import { NAVIGATION } from './api/constants';
+import { colors } from './styles/color';
+
+import {Text} from 'react-native';
+import HomeScreen from './screens/homeScreen';
+import SearchScreen from './screens/searchScreen';
+
+
 const DiscoveryStack = createStackNavigator();
 // const NearbyStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+const SearchFilter = createDrawerNavigator();
 
 export function DiscoveryStackNavigation(props) {
   return (
     <>
       <DiscoveryStack.Navigator initialRouteName={NAVIGATION.Home}>
         <DiscoveryStack.Screen name={NAVIGATION.Home} component={HomeScreen} options={generateStackOptions(props, false)} />
-        <DiscoveryStack.Screen name={NAVIGATION.Search} component={SearchScreen} options={generateStackOptions(props, true)} />
+        <DiscoveryStack.Screen name={NAVIGATION.Search} component={SearchScreen} options={generateStackOptions(props, false)} />
       </DiscoveryStack.Navigator>
     </>
   );

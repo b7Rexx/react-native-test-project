@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, Image, View } from 'react-native';
 import { Card, CardItem, Button, Icon } from 'native-base';
 import { styles } from '../styles/style';
-import { colors } from '../styles/color';
 
 class CardView extends React.Component {
 
@@ -34,7 +33,7 @@ class CardView extends React.Component {
         <View style={styles.cardBody}>
           {this.detail()}
         </View>
-        <Button style={styles.cardFooter} onPress={() => this.props.navigation.navigate(this.props.navigate)}>
+        <Button style={styles.cardFooter} onPress={() => this.props.navigation.navigate(this.props.navigate, { tag: this.props.title })}>
           {this.footer()}
         </Button>
       </Card>

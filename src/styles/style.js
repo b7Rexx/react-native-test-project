@@ -47,9 +47,6 @@ export const styles = StyleSheet.create({
   cardBody: {
     backgroundColor: 'transparent',
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.34,
     elevation: 10,
     height: 240,
   },
@@ -66,9 +63,6 @@ export const styles = StyleSheet.create({
     marginRight: 20,
     marginTop: -35,
     height: 70,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.34,
     elevation: 10,
   },
   cardFooterTitle: {
@@ -123,5 +117,50 @@ export const styles = StyleSheet.create({
   text: {
     color: colors.secondaryText,
     fontSize: 20
+  },
+
+  searchBar: {
+    margin: 5,
+    backgroundColor: colors.white,
+    elevation: 10,
+  },
+  listSearchView: {
+    padding: 10,
+  },
+  // house card
+  houseCard: {
+    backgroundColor: 'transparent',
+    height: 200,
+    marginBottom: 20,
+  },
+  houseCardTitle: {
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.primaryColor,
+    elevation: 5
+  },
+  houseCardText: {
+    color: colors.primaryText,
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  houseCardBody: {
+    height: 160,
+    width: '100%',
+  },
+  houseCardImage: {
+    height: '100%',
+    width: '100%',
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15
+  },
+  houseCardIcon: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    color: colors.white
+  },
+  houseCardIconFav: {
+    color: colors.accentColor
   }
 });

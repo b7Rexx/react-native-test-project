@@ -1,16 +1,14 @@
-import { DEFAULT_APP_VIEW, CHANGE_APP_VIEW } from "../api/constants";
+import { DEFAULT_APP_VIEW, CHANGE_APP_VIEW, UPDATE_SEARCH_STATE } from "../api/constants";
+import HouseService from '../services/house.service';
+import SearchService from '../services/search.service';
 
 const initialState = {
   view: DEFAULT_APP_VIEW,
   houses: {
-    list: [
-      { title: 'Test1', detail: 'detail1', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Kitchens', 'Houses'] },
-      { title: 'Test2', detail: 'detail2', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Kitchens', 'Apartments'] },
-      { title: 'Test3', detail: 'detail3', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Trending', 'Houses'] },
-      { title: 'Test4', detail: 'detail4', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Top Seller', 'Apartments'] },
-    ],
+    list: HouseService.list,
   },
-  tags: ['Top seller', 'Trending', 'Kitchens', 'Houses', 'Apartments']
+  tags: HouseService.tags,
+  search: SearchService.initData(),
 };
 
 const appReducer = (state = initialState, action) => {
@@ -19,6 +17,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         view: action.payload
+      };
+    case UPDATE_SEARCH_STATE:
+      let searchState = SearchService.updateSearchList(action.payload.query, action.payload.tags);
+      return {
+        ...state,
+        search: searchState
       };
     default:
       return state;
