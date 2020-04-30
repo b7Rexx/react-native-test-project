@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, Image, View } from 'react-native';
-import { Card, CardItem, Button } from 'native-base';
+import { Card, CardItem, Button, Icon } from 'native-base';
 import { styles } from '../styles/style';
+import { colors } from '../styles/color';
 
 class CardView extends React.Component {
 
@@ -14,8 +15,11 @@ class CardView extends React.Component {
     if (this.props.footer) {
       return (
         <>
-          <Text style={styles.cardFooterTitle}>{this.props.footer.title || ''}</Text>
-          <Text style={styles.cardFooterText}>{this.props.footer.detail || ''}</Text>
+          <View style={{ flex: 1, justifyContent: 'space-between' }}>
+            <Text style={styles.cardFooterTitle}>{this.props.footer.title || ''}</Text>
+            <Text style={styles.cardFooterText}>{this.props.footer.detail || ''}</Text>
+          </View>
+          <Icon name='ios-arrow-round-forward' style={styles.cardFooterIcon} />
         </>
       );
     }

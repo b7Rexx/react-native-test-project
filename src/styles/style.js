@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
 
   // card
   card: {
-    marginBottom:20,
+    marginBottom: 20,
   },
   cardHeader: {
     backgroundColor: 'transparent'
@@ -59,8 +59,6 @@ export const styles = StyleSheet.create({
   },
   cardFooter: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
     justifyContent: 'space-around',
     backgroundColor: colors.white,
     padding: 10,
@@ -80,8 +78,19 @@ export const styles = StyleSheet.create({
   },
   cardFooterText: {
     color: colors.secondaryText,
+    marginTop: 5,
   },
-
+  cardFooterIcon: {
+    alignSelf: 'center',
+    backgroundColor: colors.lightPrimaryColor,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 3,
+    paddingBottom: 3,
+    fontSize: 32,
+    borderRadius: 50,
+    color: colors.white,
+  },
   button: {
     backgroundColor: colors.primaryColor,
     color: colors.primaryText,
