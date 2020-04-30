@@ -5,15 +5,15 @@ import {
   Button,
   Text,
 } from 'native-base';
-import { layouts } from '../styles/layout.css';
+import { styles } from '../styles/style';
 export default class FooterLayout extends Component {
   render() {
     return (
       <>
-        <Footer style={layouts.footer}>
-          <FooterTab style={layouts.footerTab}>
+        <Footer style={styles.footer}>
+          <FooterTab style={styles.footerTab}>
             <Button full>
-              <Text style={layouts.footerText}>Footer</Text>
+              <Text style={styles.footerText}>Footer</Text>
             </Button>
           </FooterTab>
         </Footer>

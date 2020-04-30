@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Icon } from 'native-base';
 import { NAVIGATION } from './api/constants';
-import { layouts } from './styles/layout';
 import { styles } from './styles/style';
 import { colors } from './styles/color';
 
@@ -15,8 +14,8 @@ import { colors } from './styles/color';
 export function generateStackOptions(props, header = false, headerLeft = null, headerRight = null) {
   let stackOptions = {
     headerShown: header,
-    headerStyle: layouts.header,
-    headerTitleStyle: layouts.headerText
+    headerStyle: styles.header,
+    headerTitleStyle: styles.headerText
   };
   if (headerLeft === 'drawer') {
     stackOptions.headerLeft = () => (
@@ -40,7 +39,7 @@ export function generateTabOptions(icon) {
   let tabOptions = {
     tabBarIcon: ({ focused }) => {
       if (!focused)
-        return <Icon name={icon} />;
+        return <Icon name={icon} style={{ color: colors.secondaryText }} />;
       else
         return <Icon name={icon} style={{ color: colors.accentColor }} />;
     }
