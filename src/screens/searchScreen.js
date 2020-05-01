@@ -91,7 +91,9 @@ class SearchScreen extends React.Component {
 
               <ScrollView style={styles.listSearchView} >
                 {list.map((item, index) => {
-                  return (<TouchableOpacity key={index} onPress={() => this.props.navigation.navigate(NAVIGATION.HouseDetail, item)}>
+                  return (<TouchableOpacity key={index} onPress={() => {
+                    this.props.navigation.navigate(NAVIGATION.HouseDetail, { item: item })
+                  }}>
                     <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
                   </TouchableOpacity>)
                 })}

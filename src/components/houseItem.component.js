@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, View } from 'react-native';
+import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { Card, CardItem, Icon } from 'native-base';
 import { styles } from '../styles/style';
 

@@ -134,9 +134,9 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   houseCardTitle: {
-    flex:1,
-    flexDirection:'column',
-    alignItems:'flex-start',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderBottomColor: colors.primaryColor,
@@ -169,5 +169,43 @@ export const styles = StyleSheet.create({
   },
   houseCardIconFav: {
     color: colors.accentColor
-  }
+  },
+
+
+  // house detail Stack
+  houseDetailImage: {
+    height: 300,
+    width: '100%',
+    opacity: 0.8,
+  },
+  houseDetailButtonOverlay: {
+    position: 'absolute',
+    top: 10,
+  },
+  houseDetailButtonBack: { left: 20 },
+  houseDetailButtonFav: { right: 50 },
+  houseDetailButtonEllipse: { right: 20 },
+  houseDetailIconOverlay: {
+    fontSize: 28,
+    elevation: 10,
+    color: colors.primaryText,
+  },
+  houseDetailTitle: {
+    backgroundColor: colors.white,
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 20,
+    elevation: 10,
+  },
+  houseDetailPrice: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: colors.primaryText
+  },
+  houseDetailLocation: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    color: colors.primaryText,
+    marginTop: 5,
+  },
 });

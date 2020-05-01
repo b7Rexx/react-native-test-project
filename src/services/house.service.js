@@ -3,14 +3,6 @@ class HouseService {
     this.bestPicks = [];
     this.trendingFlats = [];
     this.tags = ['Top seller', 'Trending', 'Kitchens', 'Houses', 'Apartments'];
-
-    this.list = [
-      { title: 'Test1', detail: 'detail2', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Kitchens', 'Houses'] },
-      { title: 'Test2', detail: 'detail1', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Kitchens', 'Apartments'] },
-      { title: 'Test3', detail: 'detail3', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Trending', 'Houses'] },
-      { title: 'Test4', detail: 'detail4', image: 'https://www.meroproperty.com/files/properties/hot-property-on-sale-hurry.jpg', tags: ['Top Seller', 'Apartments'] },
-    ];
-
   }
 
   /**
@@ -25,15 +17,27 @@ class HouseService {
     };
   }
 
-    /**
-   * 
-   * @param {boolean} indicator 
-   * @param {Array} list 
-   */
+  /**
+ * 
+ * @param {boolean} indicator 
+ * @param {Array} list 
+ */
   trendingFlatDefinition(indicator, list) {
     return {
       indicator: indicator,
       list: list
+    };
+  }
+
+
+  /**
+   * Modify house detail stack
+   * @param {*} house 
+   */
+  houseStackDefintion(house, indicator = true) {
+    return {
+      indicator: indicator,
+      detail: house
     };
   }
 }

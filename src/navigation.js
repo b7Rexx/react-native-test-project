@@ -16,14 +16,15 @@ const DiscoveryStack = createStackNavigator();
 // const NearbyStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-const houseDetailStack = createStackNavigator();
+const HouseDetailStack = createStackNavigator();
 
 export function DiscoveryStackNavigation(props) {
   return (
     <>
-      <DiscoveryStack.Navigator initialRouteName={NAVIGATION.Home}>
+      <DiscoveryStack.Navigator>
         <DiscoveryStack.Screen name={NAVIGATION.Home} component={HomeScreen} options={generateStackOptions(props, false)} />
         <DiscoveryStack.Screen name={NAVIGATION.Search} component={SearchScreen} options={generateStackOptions(props, false)} />
+        <DiscoveryStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} />
       </DiscoveryStack.Navigator>
     </>
   );
@@ -54,9 +55,9 @@ export function DrawerNavigation() {
 export function HouseDetailStackNavigation(props) {
   return (
     <>
-      <houseDetailStack.Navigator initialRouteName={NAVIGATION.HouseDetail}>
-        <houseDetailStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, true, 'back')} />
-      </houseDetailStack.Navigator>
+      <HouseDetailStack.Navigator >
+        <HouseDetailStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} />
+      </HouseDetailStack.Navigator>
     </>
   );
 }
