@@ -1,4 +1,7 @@
-import { DEFAULT_APP_VIEW, CHANGE_APP_VIEW, UPDATE_SEARCH_STATE } from "../api/constants";
+import {
+  DEFAULT_APP_VIEW, CHANGE_APP_VIEW, UPDATE_SEARCH_STATE,
+  FETCH_BEST_PICK, FETCH_BEST_PICK_ASYNC, FETCH_TRENDING_FLAT, FETCH_TRENDING_FLAT_ASYNC
+} from "../api/constants";
 import HouseService from '../services/house.service';
 import SearchService from '../services/search.service';
 
@@ -6,12 +9,15 @@ const initialState = {
   view: DEFAULT_APP_VIEW,
   houses: {
     list: HouseService.list,
+    bestPicks: HouseService.bestPickDefinition(true, []),
+    trendingFlats: HouseService.trendingFlatDefinition(true, [])
   },
   tags: HouseService.tags,
   search: SearchService.initData(),
 };
 
 const appReducer = (state = initialState, action) => {
+  // console.log('appReducer > ', action.type, ' < > ', action);
   switch (action.type) {
     case CHANGE_APP_VIEW:
       return {
@@ -19,11 +25,44 @@ const appReducer = (state = initialState, action) => {
         view: action.payload
       };
     case UPDATE_SEARCH_STATE:
-      let searchState = SearchService.updateSearchList(action.payload.query, action.payload.tags);
+      let searchState = SearchService.updateSearchList(state.houses, action.payload.params, action.payload.query, action.payload.options);
       return {
         ...state,
         search: searchState
       };
+    case FETCH_BEST_PICK:
+      return {
+        ...state,
+        houses: {
+          ...state.houses,
+          bestPicks: action.payload
+        }
+      };
+    case FETCH_BEST_PICK_ASYNC:
+      return {
+        ...state,
+        houses: {
+          ...state.houses,
+          bestPicks: action.payload
+        }
+      };
+    case FETCH_TRENDING_FLAT:
+      return {
+        ...state,
+        houses: {
+          ...state.houses,
+          trendingFlats: action.payload
+        }
+      };
+    case FETCH_TRENDING_FLAT_ASYNC:
+      return {
+        ...state,
+        houses: {
+          ...state.houses,
+          trendingFlats: action.payload
+        }
+      };
+
     default:
       return state;
   }

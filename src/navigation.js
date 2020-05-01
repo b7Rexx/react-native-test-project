@@ -7,16 +7,16 @@ import { generateStackOptions, generateTabOptions } from './navigationHelper';
 import { NAVIGATION } from './api/constants';
 import { colors } from './styles/color';
 
-import {Text} from 'react-native';
 import HomeScreen from './screens/homeScreen';
 import SearchScreen from './screens/searchScreen';
+import HouseDetailScreen from './screens/houseDetailScreen';
 
 
 const DiscoveryStack = createStackNavigator();
 // const NearbyStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-const SearchFilter = createDrawerNavigator();
+const houseDetailStack = createStackNavigator();
 
 export function DiscoveryStackNavigation(props) {
   return (
@@ -46,6 +46,17 @@ export function DrawerNavigation() {
   return (
     <Drawer.Navigator initialRouteName={NAVIGATION.Home}>
       <Drawer.Screen name={NAVIGATION.Home} component={BottomTabNavigation} />
+      <Drawer.Screen name={NAVIGATION.HouseDetail} component={HouseDetailStackNavigation} />
     </Drawer.Navigator>
+  );
+}
+
+export function HouseDetailStackNavigation(props) {
+  return (
+    <>
+      <houseDetailStack.Navigator initialRouteName={NAVIGATION.HouseDetail}>
+        <houseDetailStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, true, 'back')} />
+      </houseDetailStack.Navigator>
+    </>
   );
 }

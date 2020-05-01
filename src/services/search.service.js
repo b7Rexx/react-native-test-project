@@ -1,7 +1,7 @@
 import HouseService from './house.service';
+import { NAVIGATION } from '../api/constants';
 class SearchService {
   constructor() {
-    this.list = HouseService.list;
     this.tags = HouseService.tags;
   }
 
@@ -9,31 +9,36 @@ class SearchService {
     return {
       query: '',
       filterTags: [],
-      list: this.list
+      list: []
     };
   }
 
-  updateSearchList(query, tags) {
-    let list = Object.values(this.list).filter(item => {
-
-      let matchTags = Object.values(tags).filter(tag => {
-        return item.tags.includes(tag);
-      })
-      return matchTags.length > 0;
-    });
-
-    // load all list if empty tags matched
-    if (list.length == 0) list = this.list;
-
-    if (query !== '') {
-      list = Object.values(list).filter(item => {
-        return !(!item.title.includes(query) && !item.detail.includes(query));
-      });
+  updateSearchList(houses, params, query, options) {
+    let list = [];
+    switch (params.searchSwitch) {
+      case NAVIGATION.bestPicks:
+        list = houses.bestPicks.list;  
+        if (query !== '') {
+          list = Object.values(houses.bestPicks.list).filter(item => {
+            return item.location.includes(query);
+          });
+        }
+        break;
+      case NAVIGATION.trendingFlats:
+        list = houses.trendingFlats.list;
+        if (query !== '') {
+          list = Object.values(houses.trendingFlats.list).filter(item => {
+            return item.location.toLowerCase().includes(query.toLowerCase());
+          });
+        }
+        break;
+      default:
+        break;
     }
 
     return {
       query: query,
-      filterTags: tags,
+      filterTags: [],
       list: list
     };
   }

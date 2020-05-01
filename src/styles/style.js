@@ -134,6 +134,9 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   houseCardTitle: {
+    flex:1,
+    flexDirection:'column',
+    alignItems:'flex-start',
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderBottomColor: colors.primaryColor,
@@ -144,8 +147,12 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  houseCardDetail: {
+    color: colors.secondaryText,
+    fontSize: 12,
+  },
   houseCardBody: {
-    height: 160,
+    height: 140,
     width: '100%',
   },
   houseCardImage: {

@@ -22,6 +22,12 @@ export function generateStackOptions(props, header = false, headerLeft = null, h
       <Button transparent onPress={() => props.navigation.toggleDrawer()}><Icon name='menu' style={styles.icon} /></Button>
     );
   }
+  if (headerLeft === 'back') {
+    stackOptions.headerLeft = () => (
+      <Button transparent onPress={() => props.navigation.toggleDrawer()}><Icon name='menu' style={styles.icon} /></Button>
+    );
+  }
+
   if (headerRight === 'search') {
     stackOptions.headerRight = () => (
       <Button transparent onPress={() => props.navigation.navigate(NAVIGATION.Search)}><Icon name='search' style={styles.icon} /></Button>

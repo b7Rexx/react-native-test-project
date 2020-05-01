@@ -33,7 +33,7 @@ class CardView extends React.Component {
         <View style={styles.cardBody}>
           {this.detail()}
         </View>
-        <Button style={styles.cardFooter} onPress={() => this.props.navigation.navigate(this.props.navigate, { tag: this.props.title })}>
+        <Button style={styles.cardFooter} onPress={() => this.props.navigation.navigate(this.props.navigate, { searchSwitch: this.props.navigateParams })}>
           {this.footer()}
         </Button>
       </Card>

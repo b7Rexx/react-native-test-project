@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import { connect } from 'react-redux';
@@ -8,44 +8,47 @@ import { updateSearchState } from '../api/actions';
 import { styles } from '../styles/style';
 import { colors } from '../styles/color';
 import HouseItem from '../components/houseItem.component';
+import { NAVIGATION } from '../api/constants';
 
 const mapStateToProps = state => {
-  return { search: state.app.search, tags: state.app.tags };
+  return { houses: state.app.houses, search: state.app.search, tags: state.app.tags };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateSearchState: (query, tags) => dispatch(updateSearchState(query, tags))
+    updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options))
   };
 }
 
 class SearchScreen extends React.Component {
-
+  constructor(props) {
+    super(props);
+    let { params } = this.props.route;
+    this.params = params;
+  }
   componentDidMount() {
-    let tag = this.getTagAsArray(this.props.route.params.tag);
-    let { query } = this.props.search;
-    this.props.updateSearchState(query, tag);
+    this.props.updateSearchState(this.params, '');
   }
 
   changeQuery(query) {
-    let tag = this.getTagAsArray(this.props.search.filterTags);
-    this.props.updateSearchState(query, tag);
+    this.props.updateSearchState(this.params, query);
   }
 
   updateTagsFilter(item) {
     let tag = this.getTagAsArray(this.props.search.filterTags);
-    let { query } = this.props.search;
+    // let { query } = this.props.search;
     if (tag.includes(item))
       tag.splice(tag.indexOf(item), 1);
     else
       tag.push(item);
-    this.props.updateSearchState(query, tag);
+    // this.props.updateSearchState(query, tag);
   }
 
   getTagAsArray(tag) {
     if (Array.isArray(tag)) return tag;
     else return [tag];
   }
+
   openFilter() {
     this.refs['DRAWER'].openDrawer();
   }
@@ -54,6 +57,7 @@ class SearchScreen extends React.Component {
     let { filterTags } = this.props.search;
     return (
       <View>
+        <Text>Filter</Text>
         {this.props.tags.map((item, index) => {
           return (<ListItem key={index}>
             <CheckBox checked={filterTags.includes(item)} color={colors.primaryColor} onPress={() => this.updateTagsFilter(item)} />
@@ -72,7 +76,7 @@ class SearchScreen extends React.Component {
           <Header searchBar style={styles.searchBar}>
             <Item>
               <Icon name="ios-search" />
-              <Input placeholder="Search" value={query} onChangeText={(text) => this.changeQuery(text)} />
+              <Input placeholder="Type address, city, postal" placeholderTextColor={'lightgrey'} value={query} onChangeText={(text) => this.changeQuery(text)} />
               <Icon name="ios-funnel" onPress={() => this.openFilter()} />
             </Item>
           </Header>
@@ -87,7 +91,9 @@ class SearchScreen extends React.Component {
 
               <ScrollView style={styles.listSearchView} >
                 {list.map((item, index) => {
-                  return <HouseItem key={index} image={item.image} title={item.title} favourite={true} />
+                  return (<TouchableOpacity key={index} onPress={() => this.props.navigation.navigate(NAVIGATION.HouseDetail, item)}>
+                    <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
+                  </TouchableOpacity>)
                 })}
               </ScrollView>
 

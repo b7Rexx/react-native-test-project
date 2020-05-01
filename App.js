@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { DrawerNavigation } from './src/navigation';
 
 import configStore from './configStore';
-const store = configStore();
+const store = configStore;
 
 const App: () => React$Node = () => {
   return (
