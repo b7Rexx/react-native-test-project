@@ -3,7 +3,7 @@ import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import { connect } from 'react-redux';
-import { updateSearchState } from '../api/actions';
+import { updateSearchState, updateHouseDetailStack } from '../api/actions';
 
 import { styles } from '../styles/style';
 import { colors } from '../styles/color';
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options))
+    updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options)),
+    updateHouseDetailStack: (item) => dispatch(updateHouseDetailStack(item))
   };
 }
 
@@ -34,20 +35,25 @@ class SearchScreen extends React.Component {
     this.props.updateSearchState(this.params, query);
   }
 
-  updateTagsFilter(item) {
-    let tag = this.getTagAsArray(this.props.search.filterTags);
-    // let { query } = this.props.search;
-    if (tag.includes(item))
-      tag.splice(tag.indexOf(item), 1);
-    else
-      tag.push(item);
-    // this.props.updateSearchState(query, tag);
+  setDetailStack(item) {
+    this.props.updateHouseDetailStack(item);
+    this.props.navigation.navigate(NAVIGATION.HouseDetail)
   }
 
-  getTagAsArray(tag) {
-    if (Array.isArray(tag)) return tag;
-    else return [tag];
-  }
+  // updateTagsFilter(item) {
+  //   let tag = this.getTagAsArray(this.props.search.filterTags);
+  //   // let { query } = this.props.search;
+  //   if (tag.includes(item))
+  //     tag.splice(tag.indexOf(item), 1);
+  //   else
+  //     tag.push(item);
+  //   // this.props.updateSearchState(query, tag);
+  // }
+
+  // getTagAsArray(tag) {
+  //   if (Array.isArray(tag)) return tag;
+  //   else return [tag];
+  // }
 
   openFilter() {
     this.refs['DRAWER'].openDrawer();
@@ -92,7 +98,7 @@ class SearchScreen extends React.Component {
               <ScrollView style={styles.listSearchView} >
                 {list.map((item, index) => {
                   return (<TouchableOpacity key={index} onPress={() => {
-                    this.props.navigation.navigate(NAVIGATION.HouseDetail, { item: item })
+                    this.setDetailStack(item)
                   }}>
                     <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
                   </TouchableOpacity>)

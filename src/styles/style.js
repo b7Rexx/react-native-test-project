@@ -196,6 +196,8 @@ export const styles = StyleSheet.create({
     marginRight: 20,
     padding: 20,
     elevation: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
   },
   houseDetailPrice: {
     fontWeight: 'bold',
@@ -208,4 +210,87 @@ export const styles = StyleSheet.create({
     color: colors.primaryText,
     marginTop: 5,
   },
+  TitleTransportIcon: {
+    color: 'purple',
+    fontSize: 30,
+    position: 'absolute',
+    right: 120,
+    top: 10
+  },
+  TitleTransportText: {
+    color: colors.primaryText,
+    fontSize: 14,
+    position: 'absolute',
+    right: 122,
+    top: 42
+  },
+  TitleSafetyIcon: {
+    color: '#f0fc',
+    fontSize: 30,
+    position: 'absolute',
+    right: 70,
+    top: 10
+  },
+  TitleSafetyText: {
+    color: colors.primaryText,
+    fontSize: 14,
+    position: 'absolute',
+    right: 72,
+    top: 42
+  },
+  TitleEcologyIcon: {
+    color: 'lightblue',
+    fontSize: 30,
+    position: 'absolute',
+    right: 20,
+    top: 10
+  },
+  TitleEcologyText: {
+    color: colors.primaryText,
+    fontSize: 14,
+    position: 'absolute',
+    right: 22,
+    top: 42
+  },
+  circularIcon: {
+    backgroundColor: 'white',
+    paddingTop: 15,
+    paddingLeft: 20,
+    alignSelf: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    elevation: 4,
+  },
+  lightIcon: {
+    color: colors.secondaryText,
+    fontSize: 14,
+  },
+  iconText: {
+    color: colors.secondaryText,
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  houseDetailInfo: {
+    padding: 10,
+    color: colors.secondaryText,
+    fontSize: 16,
+    lineHeight: 22,
+  },
+  houseDetailFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'transparent'
+  },
+  circularButtonText: {
+    fontWeight: 'bold',
+    letterSpacing: 4,
+    fontSize: 20,
+    textAlign: 'center',
+    width: 140,
+    height: 35,
+    padding: 5,
+    elevation: 10,
+  }
 });

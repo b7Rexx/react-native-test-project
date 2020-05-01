@@ -24,7 +24,7 @@ export function DiscoveryStackNavigation(props) {
       <DiscoveryStack.Navigator>
         <DiscoveryStack.Screen name={NAVIGATION.Home} component={HomeScreen} options={generateStackOptions(props, false)} />
         <DiscoveryStack.Screen name={NAVIGATION.Search} component={SearchScreen} options={generateStackOptions(props, false)} />
-        <DiscoveryStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} />
+        {/* <DiscoveryStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} /> */}
       </DiscoveryStack.Navigator>
     </>
   );
