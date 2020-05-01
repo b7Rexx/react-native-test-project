@@ -39,7 +39,7 @@ class HouseDetailScreen extends React.Component {
             onPress={() => { this.props.navigation.goBack() }}>
             <Icon name='ios-arrow-round-back' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonFav]}><Icon name='star-outline' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
-          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}><Icon name='ellipsis-v' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
+          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}><Icon name='star' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
         </View>
         <HouseTitleView title={detail.Currency + ' ' + detail.priceMax} location={detail.location}
           transport={detail.transport} safety={detail.safety} ecology={detail.ecology}
