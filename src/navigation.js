@@ -10,6 +10,7 @@ import { colors } from './styles/color';
 import HomeScreen from './screens/homeScreen';
 import SearchScreen from './screens/searchScreen';
 import HouseDetailScreen from './screens/houseDetailScreen';
+import imageSliderScreen from './screens/imageSliderScreen';
 
 
 const DiscoveryStack = createStackNavigator();
@@ -57,6 +58,7 @@ export function HouseDetailStackNavigation(props) {
     <>
       <HouseDetailStack.Navigator >
         <HouseDetailStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} />
+        <HouseDetailStack.Screen name={NAVIGATION.ImageSlider} component={imageSliderScreen} options={generateStackOptions(props, false)} />
       </HouseDetailStack.Navigator>
     </>
   );

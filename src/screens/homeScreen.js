@@ -48,8 +48,8 @@ class HomeScreen extends React.Component {
 
   render() {
     let { bestPicks, trendingFlats } = this.props.houses;
-    // if (bestPicks.indicator && trendingFlats.indicator)
-    //   return <ActivityIndicator style={styles.indicator}/>
+    if (bestPicks.indicator && trendingFlats.indicator)
+      return <ActivityIndicator style={styles.indicator} />
 
     return (
       <>

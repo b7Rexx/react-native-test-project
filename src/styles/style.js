@@ -196,8 +196,8 @@ export const styles = StyleSheet.create({
     marginRight: 20,
     padding: 20,
     elevation: 10,
-    borderBottomLeftRadius:10,
-    borderBottomRightRadius:10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   houseDetailPrice: {
     fontWeight: 'bold',
@@ -292,5 +292,11 @@ export const styles = StyleSheet.create({
     height: 35,
     padding: 5,
     elevation: 10,
-  }
+  },
+
+  sliderTitle: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 70,
+  },
 });

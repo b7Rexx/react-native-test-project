@@ -17,6 +17,7 @@ export const NAVIGATION = {
   Home: 'Home',
   Search: 'Search',
   HouseDetail: 'HouseDetail',
+  ImageSlider: 'ImageSlider',
 
 
   // switch params for search services

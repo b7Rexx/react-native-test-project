@@ -9,6 +9,7 @@ import CircularIcon from '../components/circularIcon.component';
 import LightIcon from '../components/lightIcon.component';
 import CircularButton from '../components/circularButton.component';
 import { colors } from '../styles/color';
+import { NAVIGATION } from '../api/constants';
 const mapStateToProps = state => {
   return {
     houseDetailStack: state.app.houseDetailStack
@@ -41,9 +42,11 @@ class HouseDetailScreen extends React.Component {
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonFav]}><Icon name='star-outline' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}><Icon name='star' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
         </View>
-        <HouseTitleView title={detail.Currency + ' ' + detail.priceMax} location={detail.location}
-          transport={detail.transport} safety={detail.safety} ecology={detail.ecology}
-        />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate(NAVIGATION.ImageSlider)}>
+          <HouseTitleView title={detail.Currency + ' ' + detail.priceMax} location={detail.location}
+            transport={detail.transport} safety={detail.safety} ecology={detail.ecology}
+          />
+        </TouchableOpacity>
         <ScrollView>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 25 }}>
             <CircularIcon text='Map View' icon='bus' color='blue' />

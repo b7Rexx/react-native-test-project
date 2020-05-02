@@ -17,7 +17,6 @@ const initialState = {
 };
 
 const appReducer = (state = initialState, action) => {
-  // console.log('appReducer > ', action.type, ' < > ', action);
   switch (action.type) {
     case CHANGE_APP_VIEW:
       return {

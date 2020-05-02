@@ -6,7 +6,6 @@ import { FETCH_BEST_PICK, FETCH_BEST_PICK_ASYNC, FETCH_TRENDING_FLAT, FETCH_TREN
 function* fetchOnTrendingFlats() {
   try {
     const data = yield ApiService.fetchTrendingFlats().then((response) => { return response.data });
-  console.log('fetchOnTrendingFlats >',data);
     yield put({
       type: FETCH_TRENDING_FLAT_ASYNC,
       payload: HouseService.trendingFlatDefinition(false, data),
