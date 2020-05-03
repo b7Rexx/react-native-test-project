@@ -4,6 +4,7 @@ import HouseService from '../services/house.service';
 import { FETCH_BEST_PICK, FETCH_BEST_PICK_ASYNC, FETCH_TRENDING_FLAT, FETCH_TRENDING_FLAT_ASYNC } from '../api/constants';
 
 function* fetchOnTrendingFlats() {
+  console.log('apiSaga > fetchOnTrendingFlats');
   try {
     const data = yield ApiService.fetchTrendingFlats().then((response) => { return response.data });
     yield put({
@@ -24,6 +25,7 @@ export function* watchFetchOnTrendingFlats() {
 };
 
 function* fetchOnBestPicks() {
+  console.log('apiSaga > fetchOnBestPicks');
   try {
     const data = yield ApiService.fetchBestPicks().then((response) => { return response.data });
     yield put({

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import { Button } from 'native-base';
 import { styles } from '../styles/style';
 import { connect } from 'react-redux';
 import { NAVIGATION } from '../api/constants';
 import CardView from '../components/cardView.component';
-import { fetchBestPicks, fetchTrendingFlats } from '../api/actions';
+import { fetchBestPicks, fetchTrendingFlats, resetRefreshHome } from '../api/actions';
 
 const mapStateToProps = state => {
   return { houses: state.app.houses, tags: state.app.tags }
@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
+    resetRefreshHome: (value) => dispatch(resetRefreshHome(value)),
     fetchBestPicks: () => dispatch(fetchBestPicks()),
     fetchTrendingFlats: () => dispatch(fetchTrendingFlats()),
   };
@@ -46,14 +47,26 @@ class HomeScreen extends React.Component {
     }
   }
 
+  onRefresh() {
+    this.props.resetRefreshHome(true);
+    this.props.fetchBestPicks();
+    this.props.fetchTrendingFlats();
+  }
+
   render() {
-    let { bestPicks, trendingFlats } = this.props.houses;
+    let { refreshing, bestPicks, trendingFlats } = this.props.houses;
     if (bestPicks.indicator && trendingFlats.indicator)
       return <ActivityIndicator style={styles.indicator} />
 
     return (
       <>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+          }>
           {this.renderBestPicks()}
           <ScrollView style={styles.listButtonView} horizontal={true}>
             {this.props.tags.map((item, index) => {

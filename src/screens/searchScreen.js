@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity } from 'react-native';
+import { ScrollView, View, TouchableOpacity, RefreshControl } from 'react-native';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import { connect } from 'react-redux';
-import { updateSearchState, updateHouseDetailStack } from '../api/actions';
+import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation } from '../api/actions';
 
 import { styles } from '../styles/style';
 import { colors } from '../styles/color';
@@ -16,6 +16,8 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
+    searchByGeoLocation: () => dispatch(searchByGeoLocation()),
+    resetRefreshSearch: (value) => dispatch(resetRefreshSearch(value)),
     updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options)),
     updateHouseDetailStack: (item) => dispatch(updateHouseDetailStack(item))
   };
@@ -28,7 +30,10 @@ class SearchScreen extends React.Component {
     this.params = params;
   }
   componentDidMount() {
-    this.props.updateSearchState(this.params, '');
+    if (this.params.searchSwitch === NAVIGATION.NearBy)
+      this.props.searchByGeoLocation();
+    else
+      this.props.updateSearchState(this.params, '');
   }
 
   changeQuery(query) {
@@ -74,8 +79,13 @@ class SearchScreen extends React.Component {
     );
   };
 
+  onRefresh() {
+    this.props.resetRefreshSearch(true);
+    this.props.updateSearchState(this.params, '');
+  }
+
   render() {
-    let { query, list } = this.props.search;
+    let { refreshing, query, list } = this.props.search;
     return (
       <>
         <Container>
@@ -95,7 +105,13 @@ class SearchScreen extends React.Component {
               drawerBackgroundColor="#fff"
               renderNavigationView={this.renderDrawer}>
 
-              <ScrollView style={styles.listSearchView} >
+              <ScrollView style={styles.listSearchView}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={this.onRefresh.bind(this)}
+                  />
+                }>
                 {list.map((item, index) => {
                   return (<TouchableOpacity key={index} onPress={() => {
                     this.setDetailStack(item)
