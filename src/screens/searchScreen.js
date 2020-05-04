@@ -1,14 +1,16 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity, RefreshControl, Dimensions } from 'react-native';
-import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, ListItem } from 'native-base';
+import { Container, Header, Item, Input, Icon, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
+import Slider from '@react-native-community/slider';
+import RangeSlider from 'rn-range-slider';
 import { connect } from 'react-redux';
-import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation } from '../api/actions';
 
+import { NAVIGATION } from '../api/constants';
 import { styles } from '../styles/style';
 import { colors } from '../styles/color';
 import HouseItem from '../components/houseItem.component';
-import { NAVIGATION } from '../api/constants';
+import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation } from '../api/actions';
 
 const mapStateToProps = state => {
   return { houses: state.app.houses, search: state.app.search, tags: state.app.tags };
@@ -46,7 +48,11 @@ class SearchScreen extends React.Component {
   }
 
   toggleFilter() {
-    this.refs['DRAWER'].closeDrawer();
+    let drawer = this.refs['DRAWER'];
+    if (drawer._drawerShown)
+      drawer.closeDrawer();
+    else
+      drawer.openDrawer();
   }
 
   renderDrawer = () => {
@@ -54,6 +60,27 @@ class SearchScreen extends React.Component {
     return (
       <View>
         <Text>Filter</Text>
+
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#000000"
+        />
+
+        <RangeSlider
+          style={{ width: 160, height: 80 }}
+          gravity={'center'}
+          min={200}
+          max={1000}
+          step={20}
+          selectionColor="#3df"
+          blankColor="#f618"
+          onValueChanged={(low, high, fromUser) => {
+            this.setState({ rangeLow: low, rangeHigh: high })
+          }} />
+
         {this.props.tags.map((item, index) => {
           return (<ListItem key={index}>
             <CheckBox checked={filterTags.includes(item)} color={colors.primaryColor} onPress={() => this.updateTagsFilter(item)} />
