@@ -53,7 +53,8 @@ class HomeScreen extends React.Component {
   render() {
     let { refreshing, indicator } = this.props.houses;
     if (indicator)
-      return <ActivityIndicator style={styles.indicator} />
+      return <ActivityIndicator style={styles.indicator} size='large' />
+      
 
     return (
       <>

@@ -12,7 +12,7 @@
 
 export const colors = {
   white: '#FFFFFF',
-  darkPrimaryColor: '#AFB42B',
+  darkPrimaryColor: '#35517f',
   lightPrimaryColor: '#fac082',
   primaryColor: '#a3cfd5',
   textIcons: '#8c8c8c',

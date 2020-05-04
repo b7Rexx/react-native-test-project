@@ -81,7 +81,7 @@ export function DrawerNavigation() {
   return (
     <Drawer.Navigator initialRouteName={NAVIGATION.Home}>
       <Drawer.Screen name={NAVIGATION.Home} component={BottomTabNavigation} />
-      <Drawer.Screen name={NAVIGATION.HouseDetail} component={HouseDetailStackNavigation} />
+      <Drawer.Screen name={NAVIGATION.HouseDetail} component={HouseDetailStackNavigation} options={{ drawerIcon: () => null, drawerLabel: () => null }} />
     </Drawer.Navigator>
   );
 }

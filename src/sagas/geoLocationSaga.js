@@ -7,14 +7,14 @@ function* fetchGeoLocation() {
     const data = yield SearchService.getGeolocationCurrentPosition().then((response) => { return response });
     yield put({
       type: FETCH_BY_GEOLOCATION_ASYNC,
-      payload: data,
+      payload: { status: false, data: data, message: '' },
     });
   }
   catch (error) {
     console.log(error);
     yield put({
       type: FETCH_BY_GEOLOCATION_ASYNC,
-      payload: {},
+      payload: { status: true, data: [], message: error },
     });
   }
 };

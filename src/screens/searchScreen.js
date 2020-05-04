@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity, RefreshControl } from 'react-native';
+import { ScrollView, View, TouchableOpacity, RefreshControl, Dimensions } from 'react-native';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import { connect } from 'react-redux';
@@ -45,23 +45,8 @@ class SearchScreen extends React.Component {
     this.props.navigation.navigate(NAVIGATION.HouseDetail)
   }
 
-  // updateTagsFilter(item) {
-  //   let tag = this.getTagAsArray(this.props.search.filterTags);
-  //   // let { query } = this.props.search;
-  //   if (tag.includes(item))
-  //     tag.splice(tag.indexOf(item), 1);
-  //   else
-  //     tag.push(item);
-  //   // this.props.updateSearchState(query, tag);
-  // }
-
-  // getTagAsArray(tag) {
-  //   if (Array.isArray(tag)) return tag;
-  //   else return [tag];
-  // }
-
-  openFilter() {
-    this.refs['DRAWER'].openDrawer();
+  toggleFilter() {
+    this.refs['DRAWER'].closeDrawer();
   }
 
   renderDrawer = () => {
@@ -81,11 +66,36 @@ class SearchScreen extends React.Component {
 
   onRefresh() {
     this.props.resetRefreshSearch(true);
-    this.props.updateSearchState(this.params, '');
+    if (this.params.searchSwitch === NAVIGATION.NearBy)
+      this.props.searchByGeoLocation();
+    else
+      this.props.updateSearchState(this.params, '');
+  }
+
+  errorCheck() {
+    let { error, list } = this.props.search;
+    if (error.status) {
+      return (<>
+        <Text>{error.message}</Text>
+      </>);
+    }
+    else {
+      return (<>
+        {list.map((item, index) => {
+          return (<TouchableOpacity key={index} onPress={() => {
+            this.setDetailStack(item)
+          }}>
+            <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
+          </TouchableOpacity>)
+        })}
+      </>);
+    }
   }
 
   render() {
-    let { refreshing, query, list } = this.props.search;
+    const dimensions = Dimensions.get("screen");
+    let { refreshing, query } = this.props.search;
+
     return (
       <>
         <Container>
@@ -93,12 +103,12 @@ class SearchScreen extends React.Component {
             <Item>
               <Icon name="ios-search" />
               <Input placeholder="Type address, city, postal" placeholderTextColor={'lightgrey'} value={query} onChangeText={(text) => this.changeQuery(text)} />
-              <Icon name="ios-funnel" onPress={() => this.openFilter()} />
+              <Icon name="ios-funnel" onPress={() => this.toggleFilter()} />
             </Item>
           </Header>
           <View style={{ flex: 1 }}>
             <DrawerLayout
-              drawerWidth={200}
+              drawerWidth={dimensions.width}
               ref={'DRAWER'}
               drawerPosition={DrawerLayout.positions.Right}
               drawerType='slide'
@@ -112,15 +122,8 @@ class SearchScreen extends React.Component {
                     onRefresh={this.onRefresh.bind(this)}
                   />
                 }>
-                {list.map((item, index) => {
-                  return (<TouchableOpacity key={index} onPress={() => {
-                    this.setDetailStack(item)
-                  }}>
-                    <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
-                  </TouchableOpacity>)
-                })}
+                {this.errorCheck()}
               </ScrollView>
-
             </DrawerLayout>
           </View>
         </Container>

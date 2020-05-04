@@ -299,4 +299,8 @@ export const styles = StyleSheet.create({
     width: '100%',
     bottom: 70,
   },
+  indicator: {
+    marginTop: 50,
+    color: colors.primaryText
+  },
 });

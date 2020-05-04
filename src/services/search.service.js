@@ -1,5 +1,6 @@
 import HouseService from './house.service';
 import Geolocation from '@react-native-community/geolocation';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import { NAVIGATION } from '../api/constants';
 import { getDistance } from 'geolib';
 class SearchService {
@@ -12,6 +13,13 @@ class SearchService {
       query: '',
       filterTags: [],
       list: []
+    };
+  }
+
+  errorMessage(status = false, message = '') {
+    return {
+      status: status,
+      message: message
     };
   }
 
@@ -56,19 +64,26 @@ class SearchService {
 
   getGeolocationCurrentPosition() {
     return new Promise((res, rej) => {
-      Geolocation.getCurrentPosition(
-        position => {
-          res(position.coords);
-        },
-        error => rej('Error getCurrentPosition  > ', error.message),
-        { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
-      );
-
+      RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({ interval: 10000, fastInterval: 5000 })
+        .then(() => {
+          Geolocation.getCurrentPosition(
+            position => {
+              res(position.coords);
+            },
+            error => {
+              rej('Location Error (getCurrentPosition) ', error.message)
+            },
+            { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
+          );
+        }).catch(error => {
+          rej('Location Error (getCurrentPosition)  ', error.message)
+        });
     });
   }
 
 
   sortByGeolocation(houses, positionCoords) {
+    console.log('positionCoords', positionCoords);
     if (!(positionCoords.latitude && positionCoords.longitude))
       return {
         query: '',

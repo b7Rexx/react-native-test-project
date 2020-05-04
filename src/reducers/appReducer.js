@@ -15,6 +15,7 @@ const initialState = {
   tags: HouseService.tags,
   search: {
     refreshing: false,
+    error: SearchService.errorMessage(),
     ...SearchService.initData()
   },
   positionCoords: {},
@@ -22,22 +23,14 @@ const initialState = {
 };
 
 const appReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case CHANGE_APP_VIEW:
       return {
         ...state,
         view: action.payload
       };
-    case UPDATE_SEARCH_STATE:
-      let searchState = SearchService.updateSearchList(state.houses, action.payload.params, action.payload.query, action.payload.options);
-      return {
-        ...state,
-        search: {
-          refreshing: false,
-          ...searchState
-        }
-      };
+
+    // Home Screen
     case FETCH_HOME_API:
     case FETCH_HOME_API_ASYNC:
       return {
@@ -67,14 +60,31 @@ const appReducer = (state = initialState, action) => {
         ...state,
         search: {
           ...state.search,
-          refreshing: action.payload
+          refreshing: action.payload,
+        }
+      };
+
+
+    // Search Screen
+    case UPDATE_SEARCH_STATE:
+      return {
+        ...state,
+        search: {
+          refreshing: false,
+          error: SearchService.errorMessage(),
+          ...SearchService.updateSearchList(state.houses, action.payload.params, action.payload.query, action.payload.options),
+
         }
       };
     case FETCH_BY_GEOLOCATION_ASYNC:
-      let searchByGeoLocationState = SearchService.sortByGeolocation(state.houses, action.payload);
       return {
         ...state,
-        search: searchByGeoLocationState,
+        search: {
+          refreshing: false,
+          error: SearchService.errorMessage(action.payload.status, action.payload.message),
+          ...SearchService.sortByGeolocation(state.houses, action.payload.data),
+
+        },
         positionCoords: action.payload
       };
     default:
