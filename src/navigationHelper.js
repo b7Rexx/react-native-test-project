@@ -24,7 +24,7 @@ export function generateStackOptions(props, header = false, headerLeft = null, h
   }
   if (headerLeft === 'back') {
     stackOptions.headerLeft = () => (
-      <Button transparent onPress={() => props.navigation.toggleDrawer()}><Icon name='menu' style={styles.icon} /></Button>
+      <Button transparent onPress={() => props.navigation.goBack()}><Icon name='ios-arrow-round-back' style={[styles.icon,{fontSize:28}]} /></Button>
     );
   }
 

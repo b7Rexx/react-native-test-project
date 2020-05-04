@@ -21,6 +21,7 @@ export const NAVIGATION = {
   HouseDetail: 'HouseDetail',
   ImageSlider: 'ImageSlider',
   NearBy: 'NearBy',
+  Blank: 'Blank',
 
 
   // switch params for search services

@@ -10,11 +10,13 @@ import { colors } from './styles/color';
 import HomeScreen from './screens/homeScreen';
 import SearchScreen from './screens/searchScreen';
 import HouseDetailScreen from './screens/houseDetailScreen';
-import imageSliderScreen from './screens/imageSliderScreen';
+import BlankScreen from './screens/blankScreen';
+import ImageSliderScreen from './screens/imageSliderScreen';
 
 
 const DiscoveryStack = createStackNavigator();
 const NearByStack = createStackNavigator();
+const BlankStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const HouseDetailStack = createStackNavigator();
@@ -46,8 +48,18 @@ export function HouseDetailStackNavigation(props) {
     <>
       <HouseDetailStack.Navigator >
         <HouseDetailStack.Screen name={NAVIGATION.HouseDetail} component={HouseDetailScreen} options={generateStackOptions(props, false)} />
-        <HouseDetailStack.Screen name={NAVIGATION.ImageSlider} component={imageSliderScreen} options={generateStackOptions(props, false)} />
+        <HouseDetailStack.Screen name={NAVIGATION.ImageSlider} component={ImageSliderScreen} options={generateStackOptions(props, false)} />
       </HouseDetailStack.Navigator>
+    </>
+  );
+}
+
+export function BlankStackNavigation(props) {
+  return (
+    <>
+      <BlankStack.Navigator initialRouteName={NAVIGATION.Blank}>
+        <BlankStack.Screen name={NAVIGATION.Blank} component={BlankScreen} options={generateStackOptions(props, true, 'back')} />
+      </BlankStack.Navigator>
     </>
   );
 }
@@ -58,9 +70,9 @@ export function BottomTabNavigation() {
       tabBarOptions={{ activeTintColor: colors.accentColor, inactiveTintColor: colors.secondaryText }}>
       <Tab.Screen name={NAVIGATION.Nearby} component={NearByStackNavigation} options={generateTabOptions('map')} />
       <Tab.Screen name={NAVIGATION.Discovery} component={DiscoveryStackNavigation} options={generateTabOptions('compass')} />
-      <Tab.Screen name={NAVIGATION.Schedule} component={DiscoveryStackNavigation} options={generateTabOptions('clock')} />
-      <Tab.Screen name={NAVIGATION.Favourite} component={DiscoveryStackNavigation} options={generateTabOptions('star')} />
-      <Tab.Screen name={NAVIGATION.More} component={DiscoveryStackNavigation} options={generateTabOptions('square')} />
+      <Tab.Screen name={NAVIGATION.Schedule} component={BlankStackNavigation} options={generateTabOptions('clock')} />
+      <Tab.Screen name={NAVIGATION.Favourite} component={BlankStackNavigation} options={generateTabOptions('star')} />
+      <Tab.Screen name={NAVIGATION.More} component={BlankStackNavigation} options={generateTabOptions('square')} />
     </Tab.Navigator>
   );
 }

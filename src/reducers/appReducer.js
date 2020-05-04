@@ -1,7 +1,7 @@
 import {
   DEFAULT_APP_VIEW, CHANGE_APP_VIEW, UPDATE_SEARCH_STATE, UPDATE_HOUSE_STACK,
   FETCH_HOME_API, FETCH_HOME_API_ASYNC, RESET_REFRESH_HOME, RESET_REFRESH_SEARCH,
-  FETCH_BY_GEOLOCATION, FETCH_BY_GEOLOCATION_ASYNC
+  FETCH_BY_GEOLOCATION_ASYNC
 } from "../api/constants";
 import HouseService from '../services/house.service';
 import SearchService from '../services/search.service';
@@ -39,14 +39,6 @@ const appReducer = (state = initialState, action) => {
         }
       };
     case FETCH_HOME_API:
-      return {
-        ...state,
-        houses: {
-          ...state.houses,
-          refreshing: false,
-          ...action.payload
-        }
-      };
     case FETCH_HOME_API_ASYNC:
       return {
         ...state,
@@ -77,11 +69,6 @@ const appReducer = (state = initialState, action) => {
           ...state.search,
           refreshing: action.payload
         }
-      };
-
-    case FETCH_BY_GEOLOCATION:
-      return {
-        ...state,
       };
     case FETCH_BY_GEOLOCATION_ASYNC:
       let searchByGeoLocationState = SearchService.sortByGeolocation(state.houses, action.payload);
