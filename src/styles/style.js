@@ -303,4 +303,28 @@ export const styles = StyleSheet.create({
     marginTop: 50,
     color: colors.primaryText
   },
+
+  searchFilterBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginBottom: -30
+  },
+  searchFilter: {
+    padding: 10,
+  },
+  searchFilterTitle: {
+    color: colors.primaryText,
+    fontWeight: 'bold',
+    fontSize: 24,
+
+  },
+  searchFilterValue: {
+    color: colors.accentColor,
+    fontSize: 16,
+  },
+  searchFilterTags:{
+    padding:10,
+    alignSelf:'flex-start'
+  }
 });

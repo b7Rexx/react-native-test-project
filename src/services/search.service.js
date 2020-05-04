@@ -11,10 +11,19 @@ class SearchService {
   initData() {
     return {
       query: '',
-      filterTags: [],
+      filters: {
+        priceLowValue: 1000,
+        priceHighValue: 10000,
+        tags: []
+      },
+      newFilters: {
+        priceLowValue: 1000,
+        priceHighValue: 10000,
+        tags: []
+      },
       list: []
     };
-  }
+  } 
 
   errorMessage(status = false, message = '') {
     return {
@@ -55,8 +64,6 @@ class SearchService {
     }
 
     return {
-      query: query,
-      filterTags: [],
       list: list
     };
   }
@@ -86,8 +93,6 @@ class SearchService {
     console.log('positionCoords', positionCoords);
     if (!(positionCoords.latitude && positionCoords.longitude))
       return {
-        query: '',
-        filterTags: [],
         list: []
       };
     let list = houses.trendingFlats
@@ -102,8 +107,6 @@ class SearchService {
       return parseFloat(a.geoDistance) - parseFloat(b.geoDistance);
     });
     return {
-      query: '',
-      filterTags: [],
       list: result
     };
   }

@@ -2,15 +2,14 @@ import React from 'react';
 import { ScrollView, View, TouchableOpacity, RefreshControl, Dimensions } from 'react-native';
 import { Container, Header, Item, Input, Icon, Text, CheckBox, ListItem } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
-import Slider from '@react-native-community/slider';
-import RangeSlider from 'rn-range-slider';
 import { connect } from 'react-redux';
 
 import { NAVIGATION } from '../api/constants';
 import { styles } from '../styles/style';
 import { colors } from '../styles/color';
 import HouseItem from '../components/houseItem.component';
-import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation } from '../api/actions';
+import SliderSelect from '../components/sliderSelect.component';
+import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation, onChangePriceSlider } from '../api/actions';
 
 const mapStateToProps = state => {
   return { houses: state.app.houses, search: state.app.search, tags: state.app.tags };
@@ -21,7 +20,8 @@ function mapDispatchToProps(dispatch) {
     searchByGeoLocation: () => dispatch(searchByGeoLocation()),
     resetRefreshSearch: (value) => dispatch(resetRefreshSearch(value)),
     updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options)),
-    updateHouseDetailStack: (item) => dispatch(updateHouseDetailStack(item))
+    updateHouseDetailStack: (item) => dispatch(updateHouseDetailStack(item)),
+    onChangePriceSlider: (low, high) => dispatch(onChangePriceSlider(low, high))
   };
 }
 
@@ -30,6 +30,13 @@ class SearchScreen extends React.Component {
     super(props);
     let { params } = this.props.route;
     this.params = params;
+    this.priceLowValue = this.props.search.filters.priceLowValue;
+    this.priceHighValue = this.props.search.filters.priceHighValue;
+    this.sliderSetting = {
+      min: 1000, max: 10000, step: 100,
+      initialLowValue: this.priceLowValue, initialHighValue: this.priceHighValue,
+      onValueChanged: (low, high) => this.onValueChanged(low, high)
+    };
   }
   componentDidMount() {
     if (this.params.searchSwitch === NAVIGATION.NearBy)
@@ -56,37 +63,31 @@ class SearchScreen extends React.Component {
   }
 
   renderDrawer = () => {
-    let { filterTags } = this.props.search;
+    let { filters } = this.props.search;
     return (
-      <View>
-        <Text>Filter</Text>
+      <View style={styles.searchFilter}>
+        <Text style={styles.searchFilterTitle}>Filter</Text>
 
-        <Slider
-          style={{ width: 200, height: 40 }}
-          minimumValue={0}
-          maximumValue={1}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
-        />
-
-        <RangeSlider
-          style={{ width: 160, height: 80 }}
-          gravity={'center'}
-          min={200}
-          max={1000}
-          step={20}
-          selectionColor="#3df"
-          blankColor="#f618"
-          onValueChanged={(low, high, fromUser) => {
-            this.setState({ rangeLow: low, rangeHigh: high })
-          }} />
-
-        {this.props.tags.map((item, index) => {
-          return (<ListItem key={index}>
-            <CheckBox checked={filterTags.includes(item)} color={colors.primaryColor} onPress={() => this.updateTagsFilter(item)} />
-            <Text> {item}</Text>
-          </ListItem>);
-        })}
+        <View style={styles.searchFilter}>
+          <View style={styles.searchFilterBox}>
+            <Text style={styles.searchFilterTitle}>Price</Text>
+            <Text style={styles.searchFilterValue}>${this.priceLowValue} - ${this.priceHighValue}</Text>
+          </View>
+          <SliderSelect options={this.sliderSetting} />
+        </View>
+        <View style={styles.searchFilter}>
+        <Text style={styles.searchFilterTitle}>Tags</Text>
+          <View style={[styles.searchFilterBox, { flexWrap: 'wrap' }]}>
+            {this.props.tags.map((item, index) => {
+              return (
+                <Item key={index} style={styles.searchFilterTags}>
+                  <CheckBox checked={filters.tags.includes(item)} color={colors.primaryColor} onPress={() => this.updateTagsFilter(item)} />
+                  <Text> {item}</Text>
+                </Item>
+              );
+            })}
+          </View>
+        </View>
       </View>
     );
   };
@@ -117,6 +118,11 @@ class SearchScreen extends React.Component {
         })}
       </>);
     }
+  }
+
+
+  onValueChanged(low, high) {
+    this.props.onChangePriceSlider(low, high);
   }
 
   render() {

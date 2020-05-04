@@ -1,7 +1,7 @@
 import {
   DEFAULT_APP_VIEW, CHANGE_APP_VIEW, UPDATE_SEARCH_STATE, UPDATE_HOUSE_STACK,
   FETCH_HOME_API, FETCH_HOME_API_ASYNC, RESET_REFRESH_HOME, RESET_REFRESH_SEARCH,
-  FETCH_BY_GEOLOCATION_ASYNC
+  FETCH_BY_GEOLOCATION_ASYNC, ON_CHANGE_PRICE_SLIDER, ON_CHANGE_FILTER_TAGS
 } from "../api/constants";
 import HouseService from '../services/house.service';
 import SearchService from '../services/search.service';
@@ -70,23 +70,55 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         search: {
+          ...state.search,
           refreshing: false,
           error: SearchService.errorMessage(),
           ...SearchService.updateSearchList(state.houses, action.payload.params, action.payload.query, action.payload.options),
-
         }
       };
     case FETCH_BY_GEOLOCATION_ASYNC:
       return {
         ...state,
         search: {
+          ...state.search,
           refreshing: false,
           error: SearchService.errorMessage(action.payload.status, action.payload.message),
           ...SearchService.sortByGeolocation(state.houses, action.payload.data),
-
         },
         positionCoords: action.payload
       };
+    case ON_CHANGE_PRICE_SLIDER:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          newFilters: {
+            ...state.search.newFilters,
+            priceLowValue: action.payload.low,
+            priceHighValue: action.payload.high,
+          }
+        }
+      };
+    case ON_CHANGE_FILTER_TAGS:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          newFilters: {
+            ...state.search.newFilters,
+            tags: action.payload.tags,
+          }
+        }
+      };
+
+    case ON_FILTER_APPLY:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          filters: newFilters
+        }
+      }
     default:
       return state;
   }
