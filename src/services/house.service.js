@@ -8,27 +8,16 @@ class HouseService {
   /**
    * 
    * @param {boolean} indicator 
-   * @param {Array} list 
+   * @param {*} bestPicks 
+   * @param {*} trendingFlats 
    */
-  bestPickDefinition(indicator, list) {
+  homeApiDefinition(indicator, bestPicks, trendingFlats) {
     return {
       indicator: indicator,
-      list: list
+      bestPicks: bestPicks,
+      trendingFlats: trendingFlats
     };
   }
-
-  /**
- * 
- * @param {boolean} indicator 
- * @param {Array} list 
- */
-  trendingFlatDefinition(indicator, list) {
-    return {
-      indicator: indicator,
-      list: list
-    };
-  }
-
 
   /**
    * Modify house detail stack

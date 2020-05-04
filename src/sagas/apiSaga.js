@@ -1,46 +1,25 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import ApiService from '../services/api.service';
 import HouseService from '../services/house.service';
-import { FETCH_BEST_PICK, FETCH_BEST_PICK_ASYNC, FETCH_TRENDING_FLAT, FETCH_TRENDING_FLAT_ASYNC } from '../api/constants';
+import { FETCH_HOME_API,FETCH_HOME_API_ASYNC } from '../api/constants';
 
-function* fetchOnTrendingFlats() {
-  console.log('apiSaga > fetchOnTrendingFlats');
+function* fetchOnHomeApi() {
+  console.log('apiSaga > fetchOnHomeApi');
   try {
-    const data = yield ApiService.fetchTrendingFlats().then((response) => { return response.data });
+    const data = yield ApiService.fetchHomeApi().then((response) => { return response.data });
     yield put({
-      type: FETCH_TRENDING_FLAT_ASYNC,
-      payload: HouseService.trendingFlatDefinition(false, data),
+      type: FETCH_HOME_API_ASYNC,
+      payload: HouseService.homeApiDefinition(false,data.bestPicks,data.trendingFlats),
     });
   }
   catch (error) {
     console.log(error);
     yield put({
-      type: FETCH_TRENDING_FLAT_ASYNC,
-      payload: HouseService.trendingFlatDefinition(false, []),
+      type: FETCH_HOME_API_ASYNC,
+      payload: HouseService.homeApiDefinition(false,[],[]),
     });
   }
 };
-export function* watchFetchOnTrendingFlats() {
-  yield takeLatest(FETCH_TRENDING_FLAT, fetchOnTrendingFlats);
-};
-
-function* fetchOnBestPicks() {
-  console.log('apiSaga > fetchOnBestPicks');
-  try {
-    const data = yield ApiService.fetchBestPicks().then((response) => { return response.data });
-    yield put({
-      type: FETCH_BEST_PICK_ASYNC,
-      payload: HouseService.bestPickDefinition(false, data),
-    });
-  }
-  catch (error) {
-    console.log(error);
-    yield put({
-      type: FETCH_BEST_PICK_ASYNC,
-      payload: HouseService.bestPickDefinition(false, []),
-    });
-  }
-};
-export function* watchFetchOnBestPicks() {
-  yield takeLatest(FETCH_BEST_PICK, fetchOnBestPicks);
+export function* watchFetchOnHomeApi() {
+  yield takeLatest(FETCH_HOME_API, fetchOnHomeApi);
 };

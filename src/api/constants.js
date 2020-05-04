@@ -5,10 +5,8 @@ export const UPDATE_HOUSE_STACK = 'UPDATE_HOUSE_STACK';
 export const RESET_REFRESH_HOME = 'RESET_REFRESH_HOME';
 export const RESET_REFRESH_SEARCH = 'RESET_REFRESH_SEARCH';
 
-export const FETCH_BEST_PICK = 'FETCH_BEST_PICK';
-export const FETCH_BEST_PICK_ASYNC = 'FETCH_BEST_PICK_ASYNC';
-export const FETCH_TRENDING_FLAT = 'FETCH_TRENDING_FLAT';
-export const FETCH_TRENDING_FLAT_ASYNC = 'FETCH_TRENDING_FLAT_ASYNC';
+export const FETCH_HOME_API = 'FETCH_HOME_API';
+export const FETCH_HOME_API_ASYNC = 'FETCH_HOME_API_ASYNC';
 export const FETCH_BY_GEOLOCATION = 'FETCH_BY_GEOLOCATION';
 export const FETCH_BY_GEOLOCATION_ASYNC = 'FETCH_BY_GEOLOCATION_ASYNC';
 
@@ -28,7 +26,7 @@ export const NAVIGATION = {
   // switch params for search services
   bestPicks: 'bestPicks',
   trendingFlats: 'trendingFlats',
-  
+
   //Bottom Tabs
   Nearby: 'Nearby',
   Discovery: 'Discovery',

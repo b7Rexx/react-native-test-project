@@ -19,25 +19,25 @@ class SearchService {
     let list = [];
     switch (params.searchSwitch) {
       case NAVIGATION.bestPicks:
-        list = houses.bestPicks.list;
+        list = houses.bestPicks;
         if (query !== '') {
-          list = Object.values(houses.bestPicks.list).filter(item => {
+          list = Object.values(houses.bestPicks).filter(item => {
             return item.location.includes(query);
           });
         }
         break;
       case NAVIGATION.trendingFlats:
-        list = houses.trendingFlats.list;
+        list = houses.trendingFlats;
         if (query !== '') {
-          list = Object.values(houses.trendingFlats.list).filter(item => {
+          list = Object.values(houses.trendingFlats).filter(item => {
             return item.location.toLowerCase().includes(query.toLowerCase());
           });
         }
         break;
       case NAVIGATION.NearBy:
-        list = houses.trendingFlats.list;
+        list = houses.trendingFlats;
         if (query !== '') {
-          list = Object.values(houses.trendingFlats.list).filter(item => {
+          list = Object.values(houses.trendingFlats).filter(item => {
             return item.location.toLowerCase().includes(query.toLowerCase());
           });
         }
@@ -75,7 +75,7 @@ class SearchService {
         filterTags: [],
         list: []
       };
-    let list = houses.trendingFlats.list
+    let list = houses.trendingFlats
     Object.values(list).forEach(item => {
       item.geoDistance = getDistance(positionCoords, {
         latitude: item.coordinate[0],
