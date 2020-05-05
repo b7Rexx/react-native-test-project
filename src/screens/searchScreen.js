@@ -8,10 +8,11 @@ import { NAVIGATION } from '../api/constants';
 import { styles } from '../styles/style';
 import HouseItem from '../components/houseItem.component';
 import FilterScreen from './filterScreen';
+import StorageServive from '../services/storage.service';
 import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation, onQueryChange } from '../api/actions';
 
 const mapStateToProps = state => {
-  return { houses: state.app.houses, search: state.app.search, tags: state.app.tags };
+  return { houses: state.app.houses, search: state.app.search, tags: state.app.tags, favourite: state.app.favourites.list };
 };
 
 function mapDispatchToProps(dispatch) {
@@ -80,7 +81,7 @@ class SearchScreen extends React.Component {
           return (<TouchableOpacity key={index} onPress={() => {
             this.setDetailStack(item)
           }}>
-            <HouseItem image={item.images[0]} title={item.location} detail={item.info} />
+            <HouseItem favourite={StorageServive.checkFavourite(this.props.favourite, item.id)} image={item.images[0]} title={item.location} detail={item.info} />
           </TouchableOpacity>)
         })}
       </>);

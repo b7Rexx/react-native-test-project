@@ -1,6 +1,7 @@
 import * as constants from "../api/constants";
 import HouseService from '../services/house.service';
 import SearchService from '../services/search.service';
+import StorageServie from '../services/storage.service';
 
 const initialState = {
   view: constants.DEFAULT_APP_VIEW,
@@ -17,7 +18,11 @@ const initialState = {
     ...SearchService.initData()
   },
   positionCoords: {},
-  houseDetailStack: HouseService.houseStackDefintion({}, true)
+  houseDetailStack: HouseService.houseStackDefintion({}, true),
+  favourites: {
+    item: '',
+    list: []
+  }
 };
 
 const appReducer = (state = initialState, action) => {
@@ -163,6 +168,25 @@ const appReducer = (state = initialState, action) => {
           ...SearchService.updateSearchList(state.houses, onQueryChange, true),
         }
       };
+
+    case constants.TOGGLE_FAVOURITE:
+      return {
+        ...state,
+        favourites: {
+          item: action.payload.itemId,
+          list: StorageServie.toggleFavourite(state.favourites.list, action.payload.itemId),
+        }
+      };
+
+    // case constants.TOGGLE_FAVOURITE_ASYNC:
+    //   return {
+    //     ...state,
+    //     favourites: {
+    //       list: StorageServie.toggleFavourite(action.payload, state.favourites.item),
+    //       item: ''
+    //     }
+    //   };
+
     default:
       return state;
   }

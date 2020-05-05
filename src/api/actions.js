@@ -48,3 +48,7 @@ export function onResetFilter() {
 export function onQueryChange(query) {
   return { type: constants.ON_QUERY_CHANGE, payload: { query: query } };
 }
+
+export function toggleFavourite(itemId) {
+  return { type: constants.TOGGLE_FAVOURITE, payload: { itemId: itemId } };
+}

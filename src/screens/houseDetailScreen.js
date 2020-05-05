@@ -10,12 +10,22 @@ import LightIcon from '../components/lightIcon.component';
 import CircularButton from '../components/circularButton.component';
 import { colors } from '../styles/color';
 import { NAVIGATION } from '../api/constants';
+import { toggleFavourite } from '../api/actions';
+import StorageServive from '../services/storage.service';
+
 const mapStateToProps = state => {
   return {
-    houseDetailStack: state.app.houseDetailStack
+    houseDetailStack: state.app.houseDetailStack,
+    favourite: state.app.favourites.list
   }
 };
 
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleFavourite: (itemId) => dispatch(toggleFavourite(itemId)),
+  };
+}
 
 class HouseDetailScreen extends React.Component {
 
@@ -37,10 +47,17 @@ class HouseDetailScreen extends React.Component {
         <View style={styles.houseDetailView}>
           {this.image()}
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonBack]}
-            onPress={() => { this.props.navigation.goBack() }}>
+            onPress={() => this.props.navigation.goBack()}>
             <Icon name='ios-arrow-round-back' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
-          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonFav]}><Icon name='star-outline' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
-          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}><Icon name='star' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
+
+          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonFav]}
+            onPress={() => { this.props.toggleFavourite(detail.id) }}>
+            <Icon name={StorageServive.checkFavourite(this.props.favourite, detail.id) ? 'star' : 'star-outline'}
+              style={styles.houseDetailIconOverlay} /></TouchableOpacity>
+
+          <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}
+            onPress={() => this.props.navigation.navigate(NAVIGATION.ImageSlider)}>
+            <Icon name='bus' style={styles.houseDetailIconOverlay} /></TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => this.props.navigation.navigate(NAVIGATION.ImageSlider)}>
           <HouseTitleView title={detail.Currency + ' ' + detail.priceMax} location={detail.location}
@@ -70,4 +87,4 @@ class HouseDetailScreen extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(HouseDetailScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HouseDetailScreen);
