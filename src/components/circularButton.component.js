@@ -8,7 +8,8 @@ class CircularButton extends React.Component {
   render() {
     return (
       <>
-        <TouchableOpacity style={{ backgroundColor: this.props.bgColor || 'white', borderRadius: 50, marginBottom: 25,marginTop: 10}}>
+        <TouchableOpacity style={{ backgroundColor: this.props.bgColor || 'white', borderRadius: 50, marginBottom: 25, marginTop: 10, elevation: 5 }}
+          onPress={this.props.onPress}>
           <Text style={[{ color: this.props.color || colors.primaryColor }, styles.circularButtonText]}>
             {this.props.text}</Text>
         </TouchableOpacity>

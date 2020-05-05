@@ -2,7 +2,16 @@ class HouseService {
   constructor() {
     this.bestPicks = [];
     this.trendingFlats = [];
-    this.tags = ['Top seller', 'Trending', 'Kitchens', 'Houses', 'Apartments'];
+    this.tags = [
+      "single room",
+      "flat",
+      "flats",
+      "house with tv",
+      "flat with sofa",
+      "yellow",
+      "yellow flat",
+      "balcony",
+    ];
   }
 
   /**

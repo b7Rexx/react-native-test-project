@@ -8,6 +8,7 @@ class SliderSelect extends React.Component {
     let { options } = this.props;
     return (<>
       <RangeSlider
+        ref={options.ref}
         style={{ width: '100%', height: 60 }}
         gravity={'center'} thumbRadius={15} thumbBorderWidth={5}
         min={options.min} max={options.max} step={options.step}

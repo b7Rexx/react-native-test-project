@@ -23,7 +23,7 @@ class SearchService {
       },
       list: []
     };
-  } 
+  }
 
   errorMessage(status = false, message = '') {
     return {
@@ -32,37 +32,42 @@ class SearchService {
     };
   }
 
-  updateSearchList(houses, params, query, options) {
+  updateSearchList(houseState, searchState, filter = false) {
+    console.log(searchState.searchSwitch);
     let list = [];
-    switch (params.searchSwitch) {
+    switch (searchState.searchSwitch) {
       case NAVIGATION.bestPicks:
-        list = houses.bestPicks;
-        if (query !== '') {
-          list = Object.values(houses.bestPicks).filter(item => {
-            return item.location.includes(query);
-          });
-        }
+        list = houseState.bestPicks;
         break;
       case NAVIGATION.trendingFlats:
-        list = houses.trendingFlats;
-        if (query !== '') {
-          list = Object.values(houses.trendingFlats).filter(item => {
-            return item.location.toLowerCase().includes(query.toLowerCase());
-          });
-        }
+        list = houseState.trendingFlats;
         break;
       case NAVIGATION.NearBy:
-        list = houses.trendingFlats;
-        if (query !== '') {
-          list = Object.values(houses.trendingFlats).filter(item => {
-            return item.location.toLowerCase().includes(query.toLowerCase());
-          });
-        }
+        list = houseState.NearBy;
         break;
       default:
         break;
     }
 
+    if (filter) {
+      list = Object.values(list).filter(item => {
+        let flag = true;
+        if (searchState.query !== '') {
+          flag = item.location.includes(searchState.query);
+        }
+
+        flag = (searchState.filters.priceLowValue < item.priceMin
+          && searchState.filters.priceHighValue > item.priceMax);
+
+        if (flag) {
+          flag = searchState.filters.tags.reduce((result, tag) => {
+            return result && item.tags.includes(tag);
+          }, flag);
+        }
+
+        return flag;
+      });
+    }
     return {
       list: list
     };
@@ -106,9 +111,7 @@ class SearchService {
     var result = list.sort(function (a, b) {
       return parseFloat(a.geoDistance) - parseFloat(b.geoDistance);
     });
-    return {
-      list: result
-    };
+    return result;
   }
 }
 

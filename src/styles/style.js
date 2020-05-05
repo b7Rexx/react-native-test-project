@@ -304,12 +304,18 @@ export const styles = StyleSheet.create({
     color: colors.primaryText
   },
 
-  searchFilterBox: {
+  searchFilterPriceBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
     marginBottom: -30
   },
+  searchFilterTagBox: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+  },
+
   searchFilter: {
     padding: 10,
   },
@@ -323,8 +329,18 @@ export const styles = StyleSheet.create({
     color: colors.accentColor,
     fontSize: 16,
   },
-  searchFilterTags:{
-    padding:10,
-    alignSelf:'flex-start'
-  }
+  searchFilterTags: {
+    margin: 7,
+    paddingRight: 12,
+    paddingBottom: 4,
+    paddingTop: 4,
+    borderRadius: 50,
+    backgroundColor: colors.lightPrimaryColor
+
+    // alignSelf:'flex-start'
+  },
+  searchFilterTagsText: {
+    marginLeft: 10,
+  },
+
 });

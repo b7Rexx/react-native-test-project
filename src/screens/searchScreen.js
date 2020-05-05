@@ -1,15 +1,14 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity, RefreshControl, Dimensions } from 'react-native';
-import { Container, Header, Item, Input, Icon, Text, CheckBox, ListItem } from 'native-base';
+import { Container, Header, Item, Input, Icon, Text } from 'native-base';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import { connect } from 'react-redux';
 
 import { NAVIGATION } from '../api/constants';
 import { styles } from '../styles/style';
-import { colors } from '../styles/color';
 import HouseItem from '../components/houseItem.component';
-import SliderSelect from '../components/sliderSelect.component';
-import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation, onChangePriceSlider } from '../api/actions';
+import FilterScreen from './filterScreen';
+import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation, onQueryChange } from '../api/actions';
 
 const mapStateToProps = state => {
   return { houses: state.app.houses, search: state.app.search, tags: state.app.tags };
@@ -17,11 +16,11 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchByGeoLocation: () => dispatch(searchByGeoLocation()),
+    searchByGeoLocation: (params) => dispatch(searchByGeoLocation(params)),
     resetRefreshSearch: (value) => dispatch(resetRefreshSearch(value)),
-    updateSearchState: (params, query, options = {}) => dispatch(updateSearchState(params, query, options)),
+    updateSearchState: (params) => dispatch(updateSearchState(params)),
+    onQueryChange: (query) => dispatch(onQueryChange(query)),
     updateHouseDetailStack: (item) => dispatch(updateHouseDetailStack(item)),
-    onChangePriceSlider: (low, high) => dispatch(onChangePriceSlider(low, high))
   };
 }
 
@@ -30,23 +29,17 @@ class SearchScreen extends React.Component {
     super(props);
     let { params } = this.props.route;
     this.params = params;
-    this.priceLowValue = this.props.search.filters.priceLowValue;
-    this.priceHighValue = this.props.search.filters.priceHighValue;
-    this.sliderSetting = {
-      min: 1000, max: 10000, step: 100,
-      initialLowValue: this.priceLowValue, initialHighValue: this.priceHighValue,
-      onValueChanged: (low, high) => this.onValueChanged(low, high)
-    };
   }
+
   componentDidMount() {
     if (this.params.searchSwitch === NAVIGATION.NearBy)
-      this.props.searchByGeoLocation();
+      this.props.searchByGeoLocation(this.params);
     else
-      this.props.updateSearchState(this.params, '');
+      this.props.updateSearchState(this.params);
   }
 
   changeQuery(query) {
-    this.props.updateSearchState(this.params, query);
+    this.props.onQueryChange(query);
   }
 
   setDetailStack(item) {
@@ -63,33 +56,7 @@ class SearchScreen extends React.Component {
   }
 
   renderDrawer = () => {
-    let { filters } = this.props.search;
-    return (
-      <View style={styles.searchFilter}>
-        <Text style={styles.searchFilterTitle}>Filter</Text>
-
-        <View style={styles.searchFilter}>
-          <View style={styles.searchFilterBox}>
-            <Text style={styles.searchFilterTitle}>Price</Text>
-            <Text style={styles.searchFilterValue}>${this.priceLowValue} - ${this.priceHighValue}</Text>
-          </View>
-          <SliderSelect options={this.sliderSetting} />
-        </View>
-        <View style={styles.searchFilter}>
-        <Text style={styles.searchFilterTitle}>Tags</Text>
-          <View style={[styles.searchFilterBox, { flexWrap: 'wrap' }]}>
-            {this.props.tags.map((item, index) => {
-              return (
-                <Item key={index} style={styles.searchFilterTags}>
-                  <CheckBox checked={filters.tags.includes(item)} color={colors.primaryColor} onPress={() => this.updateTagsFilter(item)} />
-                  <Text> {item}</Text>
-                </Item>
-              );
-            })}
-          </View>
-        </View>
-      </View>
-    );
+    return <FilterScreen onApply={() => { this.refs['DRAWER'].closeDrawer() }} />;
   };
 
   onRefresh() {
@@ -118,11 +85,6 @@ class SearchScreen extends React.Component {
         })}
       </>);
     }
-  }
-
-
-  onValueChanged(low, high) {
-    this.props.onChangePriceSlider(low, high);
   }
 
   render() {

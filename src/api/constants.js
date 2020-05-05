@@ -13,6 +13,8 @@ export const FETCH_BY_GEOLOCATION_ASYNC = 'FETCH_BY_GEOLOCATION_ASYNC';
 export const ON_CHANGE_PRICE_SLIDER = 'ON_CHANGE_PRICE_SLIDER';
 export const ON_CHANGE_FILTER_TAGS = 'ON_CHANGE_FILTER_TAGS';
 export const ON_FILTER_APPLY = 'ON_FILTER_APPLY';
+export const ON_FILTER_RESET = 'ON_FILTER_RESET';
+export const ON_QUERY_CHANGE = 'ON_QUERY_CHANGE';
 
 
 export const NO_IMAGE = 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-stock-vector-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
