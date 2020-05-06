@@ -73,6 +73,7 @@ const appReducer = (state = initialState, action) => {
     case constants.UPDATE_SEARCH_STATE:
       let updateSearchState = {
         ...state.search,
+        ...SearchService.initData(),
         searchSwitch: action.payload.params.searchSwitch,
         refreshing: false,
         error: SearchService.errorMessage(),
@@ -89,6 +90,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         search: {
           ...state.search,
+          ...SearchService.initData(),
           searchSwitch: constants.NAVIGATION.NearBy,
         }
       };
