@@ -12,10 +12,12 @@ import SearchScreen from './screens/searchScreen';
 import HouseDetailScreen from './screens/houseDetailScreen';
 import BlankScreen from './screens/blankScreen';
 import ImageSliderScreen from './screens/imageSliderScreen';
+import FavouriteScreen from './screens/favouriteScreen';
 
 
 const DiscoveryStack = createStackNavigator();
 const NearByStack = createStackNavigator();
+const FavouriteStack = createStackNavigator();
 const BlankStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -64,6 +66,17 @@ export function BlankStackNavigation(props) {
   );
 }
 
+
+export function FavouriteStackNavigation(props) {
+  return (
+    <>
+      <FavouriteStack.Navigator>
+        <FavouriteStack.Screen name={NAVIGATION.Favourite} component={FavouriteScreen} options={generateStackOptions(props, true, 'back')} />
+      </FavouriteStack.Navigator>
+    </>
+  );
+}
+
 export function BottomTabNavigation() {
   return (
     <Tab.Navigator initialRouteName={NAVIGATION.Discovery}
@@ -71,7 +84,7 @@ export function BottomTabNavigation() {
       <Tab.Screen name={NAVIGATION.Nearby} component={NearByStackNavigation} options={generateTabOptions('map')} />
       <Tab.Screen name={NAVIGATION.Discovery} component={DiscoveryStackNavigation} options={generateTabOptions('compass')} />
       <Tab.Screen name={NAVIGATION.Schedule} component={BlankStackNavigation} options={generateTabOptions('clock')} />
-      <Tab.Screen name={NAVIGATION.Favourite} component={BlankStackNavigation} options={generateTabOptions('star')} />
+      <Tab.Screen name={NAVIGATION.Favourite} component={FavouriteStackNavigation} options={generateTabOptions('star')} />
       <Tab.Screen name={NAVIGATION.More} component={BlankStackNavigation} options={generateTabOptions('square')} />
     </Tab.Navigator>
   );

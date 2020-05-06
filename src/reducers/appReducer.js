@@ -20,6 +20,7 @@ const initialState = {
   positionCoords: {},
   houseDetailStack: HouseService.houseStackDefintion({}, true),
   favourites: {
+    refreshing: false,
     item: '',
     list: []
   }
@@ -169,24 +170,25 @@ const appReducer = (state = initialState, action) => {
         }
       };
 
+    // favourite
     case constants.TOGGLE_FAVOURITE:
       return {
         ...state,
         favourites: {
+          refreshing: false,
           item: action.payload.itemId,
           list: StorageServie.toggleFavourite(state.favourites.list, action.payload.itemId),
         }
       };
 
-    // case constants.TOGGLE_FAVOURITE_ASYNC:
-    //   return {
-    //     ...state,
-    //     favourites: {
-    //       list: StorageServie.toggleFavourite(action.payload, state.favourites.item),
-    //       item: ''
-    //     }
-    //   };
-
+    case constants.RESET_REFRESH_FAVOURITE:
+      return {
+        ...state,
+        favourites: {
+          refreshing: true,
+          ...state.favourites
+        }
+      };
     default:
       return state;
   }

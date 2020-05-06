@@ -52,3 +52,7 @@ export function onQueryChange(query) {
 export function toggleFavourite(itemId) {
   return { type: constants.TOGGLE_FAVOURITE, payload: { itemId: itemId } };
 }
+
+export function resetRefreshFavourite(itemId) {
+  return { type: constants.RESET_REFRESH_FAVOURITE };
+}

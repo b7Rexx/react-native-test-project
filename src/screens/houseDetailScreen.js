@@ -16,7 +16,7 @@ import StorageServive from '../services/storage.service';
 const mapStateToProps = state => {
   return {
     houseDetailStack: state.app.houseDetailStack,
-    favourite: state.app.favourites.list
+    favourites: state.app.favourites
   }
 };
 
@@ -52,7 +52,7 @@ class HouseDetailScreen extends React.Component {
 
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonFav]}
             onPress={() => { this.props.toggleFavourite(detail.id) }}>
-            <Icon name={StorageServive.checkFavourite(this.props.favourite, detail.id) ? 'star' : 'star-outline'}
+              <Icon name={StorageServive.checkFavourite(this.props.favourites.list, detail.id) ? 'star' : 'star-outline'}
               style={styles.houseDetailIconOverlay} /></TouchableOpacity>
 
           <TouchableOpacity style={[styles.houseDetailButtonOverlay, styles.houseDetailButtonEllipse]}

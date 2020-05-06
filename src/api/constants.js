@@ -17,7 +17,7 @@ export const ON_FILTER_RESET = 'ON_FILTER_RESET';
 export const ON_QUERY_CHANGE = 'ON_QUERY_CHANGE';
 export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
 export const TOGGLE_FAVOURITE_ASYNC = 'TOGGLE_FAVOURITE_ASYNC';
-
+export const RESET_REFRESH_FAVOURITE = 'RESET_REFRESH_FAVOURITE';
 
 export const NO_IMAGE = 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-stock-vector-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
 

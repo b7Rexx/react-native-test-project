@@ -8,11 +8,10 @@ import { NAVIGATION } from '../api/constants';
 import { styles } from '../styles/style';
 import HouseItem from '../components/houseItem.component';
 import FilterScreen from './filterScreen';
-import StorageServive from '../services/storage.service';
 import { updateSearchState, updateHouseDetailStack, resetRefreshSearch, searchByGeoLocation, onQueryChange } from '../api/actions';
 
 const mapStateToProps = state => {
-  return { houses: state.app.houses, search: state.app.search, tags: state.app.tags, favourite: state.app.favourites.list };
+  return { houses: state.app.houses, search: state.app.search, tags: state.app.tags, favourite: state.app.favourites };
 };
 
 function mapDispatchToProps(dispatch) {
@@ -45,7 +44,7 @@ class SearchScreen extends React.Component {
 
   setDetailStack(item) {
     this.props.updateHouseDetailStack(item);
-    this.props.navigation.navigate(NAVIGATION.HouseDetail)
+    this.props.navigation.navigate(NAVIGATION.HouseDetail);
   }
 
   toggleFilter() {
@@ -61,7 +60,7 @@ class SearchScreen extends React.Component {
   };
 
   onRefresh() {
-    this.props.resetRefreshSearch(true);
+    this.props.resetRefreshSearch(  );
     if (this.params.searchSwitch === NAVIGATION.NearBy)
       this.props.searchByGeoLocation();
     else
@@ -81,7 +80,7 @@ class SearchScreen extends React.Component {
           return (<TouchableOpacity key={index} onPress={() => {
             this.setDetailStack(item)
           }}>
-            <HouseItem favourite={StorageServive.checkFavourite(this.props.favourite, item.id)} image={item.images[0]} title={item.location} detail={item.info} />
+            <HouseItem favourite={item.id} image={item.images[0]} title={item.location} detail={item.info} />
           </TouchableOpacity>)
         })}
       </>);

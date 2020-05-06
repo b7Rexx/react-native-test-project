@@ -33,7 +33,6 @@ class SearchService {
   }
 
   updateSearchList(houseState, searchState, filter = false) {
-    console.log(searchState.searchSwitch);
     let list = [];
     switch (searchState.searchSwitch) {
       case NAVIGATION.bestPicks:
