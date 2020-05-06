@@ -51,12 +51,15 @@ class SearchService {
     if (filter) {
       list = Object.values(list).filter(item => {
         let flag = true;
-        if (searchState.query !== '') {
+        if (searchState.query != '') {
+          console.log('0 > ', flag);
           flag = item.location.includes(searchState.query);
+          console.log('1 > ', flag);
         }
 
-        flag = (searchState.filters.priceLowValue < item.priceMin
-          && searchState.filters.priceHighValue > item.priceMax);
+        if (flag)
+          flag = (searchState.filters.priceLowValue < item.priceMin
+            && searchState.filters.priceHighValue > item.priceMax);
 
         if (flag) {
           flag = searchState.filters.tags.reduce((result, tag) => {
